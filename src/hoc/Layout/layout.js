@@ -14,11 +14,12 @@ class Layout extends Component {
             showNav: action
         })
     }
-    
+
     render() {
         return (
             <div>
-                <Header 
+                <Header
+                    user={this.props.user}
                     showNav={this.state.showNav}
                     onHideNav={() => this.toggleSideNav(false)}
                     onOpenNav={() => this.toggleSideNav(true)}
