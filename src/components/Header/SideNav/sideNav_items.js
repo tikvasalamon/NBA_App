@@ -6,7 +6,7 @@ import FontAwesome from "react-fontawesome";
 import { firebase } from "../../../firebase";
 
 const SideNavItems = (props) => {
-    console.log(props)
+    
     const items = [
         {
             type: style.option,
@@ -31,7 +31,7 @@ const SideNavItems = (props) => {
         },
         {
             type: style.option,
-            icon: 'sign-in-alt',
+            icon: 'clipboard',
             text: "Dashboard",
             link: "/dashboard",
             login: true

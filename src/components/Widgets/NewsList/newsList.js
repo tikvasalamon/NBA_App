@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Link } from "react-router-dom";
 
-import { firebaseArticles, firebaseTeams, firebaseLooper } from "../../../firebase";
+import { firebase, firebaseArticles, firebaseTeams, firebaseLooper } from "../../../firebase";
 import style from "./newsList.module.css";
 import Button from "../Buttons/buttons";
 import CardInfo from "../CardInfo/cardInfo";
@@ -34,10 +34,27 @@ class NewsList extends Component {
         firebaseArticles.orderByChild('id').startAt(start).endAt(end).once('value')
             .then((snapshot) => {
                 const articles = firebaseLooper(snapshot);
-                this.setState({
-                    items: [...this.state.items, ...articles],
-                    start,
-                    end
+
+                const asyncFunction = (item, i, cb) => {
+                    firebase.storage().ref('images').child(item.image).getDownloadURL()
+                        .then( url => {
+                            articles[i].image = url;
+                            cb();
+                        })
+                }
+        
+                let requests = articles.map((item, i) => {
+                    return new Promise((resolve) => {
+                        asyncFunction(item, i, resolve);
+                    })
+                })
+
+                Promise.all(requests).then(() => {
+                    this.setState({
+                        items: [...this.state.items, ...articles],
+                        start,
+                        end
+                    })
                 })
             })
             .catch(e => {
@@ -90,13 +107,13 @@ class NewsList extends Component {
                                 <div className={style.flex_wrapper}>
                                     <div className={style.left}
                                         style={{
-                                            background: `url(/images/articles/${item.image})`
+                                            background: `url(${item.image})`
                                         }}
                                     >
                                         <div></div>
                                     </div>
                                     < div className={style.right} >
-                                        <CardInfo teams={this.state.teams} team={item.id} date={item.date} />
+                                        <CardInfo teams={this.state.teams} team={item.team} date={item.date} />
                                         <h2>{item.title}</h2>
                                     </div >
                                 </div>
