@@ -1,7 +1,6 @@
 import React from 'react';
 
 import NewsSlider from "../../../Widgets/NewsSlider/slider";
-import style from "../../articles.module.css";
 import NewsList from "../../../Widgets/NewsList/newsList";
 
 const NewsMain = () => {

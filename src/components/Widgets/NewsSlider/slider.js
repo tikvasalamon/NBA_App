@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import SliderTemplates from "./slider_templates";
 import { firebase, firebaseArticles, firebaseLooper } from '../../../firebase';
-import { resolve } from 'q';
 
 class NewsSlider extends Component {
 
@@ -18,7 +17,6 @@ class NewsSlider extends Component {
                 const asyncFunction = (item, i, cb) => {
                     firebase.storage().ref('images').child(item.image).getDownloadURL()
                         .then( url => {
-                            console.log(url)
                             news[i].image = url;
                             cb();
                         })

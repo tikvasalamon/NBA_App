@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import { firebaseTeams, firebaseArticles, firebase } from "../../firebase";
 import style from "./dashboard.module.css";
 import FormField from "../Widgets/FormField/formField";
 import Uploader from "../Widgets/FileUploader/fileUploader";
-import { database } from 'firebase';
 
 class Dashboard extends Component {
 
