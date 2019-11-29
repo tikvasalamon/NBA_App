@@ -24,7 +24,7 @@ Project is created with:
 * moment version: ^2.24.0
 	
 ## Setup
-To run this project, you can esily enter to this URL on mobile: https://nba-fs-79795.firebaseapp.com/
+To run this project, you can easily enter to this URL on mobile: https://nba-fs-79795.firebaseapp.com/
 or
 Install it locally using npm:
 
