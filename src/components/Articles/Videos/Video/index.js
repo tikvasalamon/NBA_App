@@ -56,11 +56,16 @@ class VideoArticle extends Component {
                 <Header teamData={team[0]} />
                 <div className={style.videoWrapper}>
                     <h1>{article.title}</h1>
+
                     <iframe
                         title="videoplayer"
                         width="100%"
-                        height="300px"
-                        src={`http://www.youtube.com/embed/${article.url}`}
+                        height="315"
+                        src={`https://www.youtube.com/embed/${article.url}?&theme=dark&autoplay=0&rel=0`}
+                        frameborder="0"
+                        class="youtube-player"
+                        type="text/html"
+                        allowfullscreen
                     >
 
                     </iframe>

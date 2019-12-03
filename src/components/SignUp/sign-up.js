@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { firebase } from "../../firebase";
-import style from "./sign-in.module.css";
+import style from "./sign-up.module.css";
 import FormField from "../Widgets/FormField/formField";
 
-class SignIn extends Component {
+class SignUp extends Component {
 
     state = {
-        loginError: '',
+        registerError: '',
         loading: false,
         formData: {
             email: {
@@ -109,34 +109,20 @@ class SignIn extends Component {
             if (formIsValid) {
                 this.setState({
                     loading: true,
-                    loginError: ''
+                    registerError: ''
                 })
 
-                // if (type) {
-                    firebase.auth().signInWithEmailAndPassword(
-                        dataToSubmit.email,
-                        dataToSubmit.password
-                    ).then(() => {
-                        this.props.history.push('/')
-                    }).catch(error => {
-                        this.setState({
-                            loading: false,
-                            loginError: error.message
-                        })
+                firebase.auth().createUserWithEmailAndPassword(
+                    dataToSubmit.email,
+                    dataToSubmit.password
+                ).then(() => {
+                    this.props.history.push('/')
+                }).catch(error => {
+                    this.setState({
+                        loading: false,
+                        registerError: error.message
                     })
-                // } else {
-                //     firebase.auth().createUserWithEmailAndPassword(
-                //         dataToSubmit.email,
-                //         dataToSubmit.password
-                //     ).then(() => {
-                //         this.props.history.push('/')
-                //     }).catch(error => {
-                //         this.setState({
-                //             loading: false,
-                //             registerError: error.message
-                //         })
-                //     })
-                // }
+                })
             }
         // }
     }
@@ -146,23 +132,22 @@ class SignIn extends Component {
             'loading...'
             :
             <div>
-                {/* <button onClick={(event) => this.submitForm(event, false)}> Register now </button> */}
-                <button onClick={(event) => this.submitForm(event, true)}> Log in </button>
-                <div>Don't have an account ? <Link to='/sign-up'>Sign-up</Link> here!</div>
+                <button onClick={(event) => this.submitForm(event)}> Register now </button>
+                <div>Already have an account ? <Link to='/sign-up'>Sign-in</Link> here!</div>
             </div>
     }
 
     showError = () => (
-        this.state.loginError !== '' ?
-            <div className={style.error}>{this.state.loginError}</div>
+        this.state.registerError !== '' ?
+            <div className={style.error}>{this.state.registerError}</div>
             : ''
     )
 
     render() {
         return (
-            <div className={style.logContainer}>
-                <form onSubmit={(event) => this.submitForm(event, null)}>
-                    <h2>Log in</h2>
+            <div className={style.regContainer}>
+                <form onSubmit={(event) => this.submitForm(event)}>
+                    <h2>Register</h2>
                     <FormField
                         id={'email'}
                         formdata={this.state.formData.email}
@@ -181,4 +166,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default SignUp;
